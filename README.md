@@ -1,5 +1,9 @@
 ## StyleGAN2-ADA &mdash; Official PyTorch implementation
-
+Commands I used:
+```bash
+python dataset_tool --source=<path to dataset top level dir> --dest<path to destination>
+python train.py --data=./data --cfg=paper256 --resume=ffhq256 --outdir=out2
+```
 ![Teaser image](./docs/stylegan2-ada-teaser-1024x252.png)
 
 **Training Generative Adversarial Networks with Limited Data**<br>
