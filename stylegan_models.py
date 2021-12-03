@@ -382,12 +382,15 @@ g_all = nn.Sequential(OrderedDict([
 #g_all.load_state_dict(torch.load('./karras2019stylegan-ffhq-1024x1024.for_g_all.pt'))
 #g_all.load_state_dict(torch.load('./nft_network_snapshot.pt'))
 with open('network-snapshot-000241.pkl', 'rb') as f:
-    G = pickle.load(f)['G_ema']  # torch.nn.Module
-z = torch.randn([1, G.z_dim])    # latent codes
+    G = pickle.load(f)['G_ema'].cuda()  # torch.nn.Module
+z = torch.randn([1, G.z_dim]).cuda()    # latent codes
 c = None                                # class labels (not used in this example)
-img = G(z, c)                           # NCHW, float32, dynamic range [-1, +1]
-g_all.load_state_dict(img)
+#img = G(z, c)                           # NCHW, float32, dynamic range [-1, +1]
+#g_all.load_state_dict(G.mapping())
 
 
-g_synthesis = g_all.g_synthesis
-g_mapping = g_all.g_mapping
+#g_synthesis = g_all.g_synthesis
+#g_mapping = g_all.g_mapping
+g_synthesis = G.synthesis
+g_mapping = G.mapping
+

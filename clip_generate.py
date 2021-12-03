@@ -7,10 +7,10 @@ import clip
 import numpy as np
 from PIL import Image
 
-from stylegan_models import g_all, g_synthesis, g_mapping
+from stylegan_models import g_all, g_synthesis, g_mapping, G
 from utils import GetFeatureMaps, transform_img, compute_loss
 
-torch.manual_seed(20)
+torch.manual_seed(107)
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -46,7 +46,7 @@ parser.add_argument(
 parser.add_argument(
     '--img_save_freq',
     type=int,
-    default=5,
+    default=100,
     help='',
 )
 
@@ -157,10 +157,12 @@ def compute_perceptual_loss(gen_img, ref_img):
     return loss/len_vgg_layer_mappings
 
 counter = 0
+
 while True:
-    dlatents = latents.repeat(1,18,1)
+    dlatents = latents.repeat(1,16,1)
     img = g_synthesis(dlatents)
     
+
     # NOTE: clip normalization did not seem to have much effect
     # img = clip_normalize(img)
 
